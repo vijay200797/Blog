@@ -26,7 +26,7 @@ SECRET_KEY = 'w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['demoblogapp.azurewebsites.net']
 
 
 # Application definition

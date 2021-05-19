@@ -1,0 +1,14 @@
+{% extends 'Base.html' %}
+
+{% block content%}
+
+    <h4 class="text-center alert alert-info">Create Post Html</h4>
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class="btn btn-success btn-sm" value="Save"/>
+        <a href="/post/" class="btn btn-success btn-sm">Cancel</a>
+    </form>
+
+{% endblock content%}

@@ -26,7 +26,7 @@ SECRET_KEY = 'w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']    #demoblogapp.azurewebsites.net
+ALLOWED_HOSTS = ['demoblogapp.azurewebsites.net']    #demoblogapp.azurewebsites.net
 
 
 # Application definition
@@ -80,17 +80,17 @@ WSGI_APPLICATION = 'Blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'blogsite',
-#         'USER': 'root',
-#         'PASSWORD': 'iTech1234',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-#     # Admin user- vijay200797@gmail.com  Password = admin
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blogsite',
+        'USER': 'root',
+        'PASSWORD': 'iTech1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+    # Admin user- vijay200797@gmail.com  Password = admin
+}
 
 
 # Password validation

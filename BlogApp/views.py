@@ -1,6 +1,37 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@vijay200797 
+vijay200797
+/
+Blog
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Blog/BlogApp/views.py /
 
+Ram Avtar Add Templates in Outside Module
+Latest commit 95985fe 2 hours ago
+ History
+ 1 contributor
+48 lines (43 sloc)  1.35 KB
+
+import os
+from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 # Create your views here.
 def home_screen_veiw(request):
     list = []
@@ -18,5 +49,30 @@ def home_screen_veiw(request):
         "ListSummary": ("List has item "+ str(len(list)) + "As Below : "),
         "ListItem": list,
     }
-    # return HttpResponse("hello Home Page")
+
+
     return render(request, 'BlogApp/Home.html',context)
+
+def vw_Upload(request):
+    if request.method =="POST":
+        file = request.FILES["fileToUpload"]
+        fs = FileSystemStorage()
+        fs.save(file.name,file)
+        return redirect('/files')
+    if request.method=="GET":
+        return render(request, 'BlogApp/Upload.html')
+
+def vw_Files(request):
+    fs = FileSystemStorage()
+    # os.listdir(path)
+    print(fs.path)
+    print(settings.MEDIA_ROOT)
+    lst=list()
+    for file in os.listdir(settings.MEDIA_ROOT):
+        lst.append(
+            {
+                "FileName": file,
+                "FileUrl":fs.url(file) 
+            }
+        )
+    return render(request, 'BlogApp/Files.html', context={"ItemCount": len(lst), "Files": lst })

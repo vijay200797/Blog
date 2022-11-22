@@ -25,12 +25,13 @@
                     <td>{{post.post_content}}</td>
                     <td>{{post.post_type}}</td>
                     <td>{{post.post_additionalContext}}</td>
-                    <td>
+                    <td><div class="btn-group-vertical">
                         <a href="#" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{% url 'deletePost' post.id %}" method="POST" class="d-inline">
                             {% csrf_token %}
-                            <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                            <input type="submit" class="btn btn-warning btn-sm" value="Delete"/>
                         </form>
+                    </div>
                     </td>
                 </tr>
                 {% endfor %}

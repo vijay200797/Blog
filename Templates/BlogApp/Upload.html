@@ -1,0 +1,23 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+
+<h5 class="text-center alert alert-info">Upload File</h5>
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    
+<div class="form-group">
+    <label for="email">Browse File:</label>
+    <input type="file" required name="fileToUpload" id="fileToUpload" class="form-control" placeholder="Browse File" />
+  </div>
+  <input type="submit" class="btn btn-success btn-sm" value="Upload"/>
+</form>
+
+
+<!-- <div class="btn-group-horizontal">
+    <input type="submit" class="btn btn-success btn-sm" value="Upload"/>
+    <input type="submit" class="btn btn-success btn-sm" value="Upload"/>
+  </div> -->
+
+{% endblock content %}

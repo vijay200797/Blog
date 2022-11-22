@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from BlogApp.views import (    
-    home_screen_veiw
+    home_screen_veiw, vw_Upload, vw_Files
     )
 
 from Post.views import (    
@@ -35,6 +35,8 @@ from User.views import (
 
 urlpatterns = [
     path('', home_screen_veiw),
+    path('upload', vw_Upload),
+    path('files', vw_Files),
     path('admin/', admin.site.urls),
     path('user/', include("User.urls")),
     path('post/', include("Post.urls")),

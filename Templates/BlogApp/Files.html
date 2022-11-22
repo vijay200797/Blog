@@ -1,0 +1,33 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+    <h5 class="text-center alert alert-info">Files Availble Here</h5>
+    <h6>Total File(s) {{ItemCount}}</h6>
+    <div class="bd-example">
+        <table class="table table-hover">
+            <thead>
+        <tr>
+            <th scope="col">File Name</th>
+            <th scope="col">File URL</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for post in Files %}
+            <tr>
+                <th scope="row">{{post.FileName}}</th>
+                <td>{{post.FileUrl}}</td>
+                <td>{{post.post_content}}</td>
+                <td>
+                    <div class="btn-group-vertical">
+                        <a href="{{post.FileUrl}}" download class="btn btn-warning btn-sm">Download</a>
+                        <a class="btn btn-warning btn-sm">Preview</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 # Create your views here.
 def home_screen_veiw(request):
@@ -17,5 +18,5 @@ def home_screen_veiw(request):
         "ListSummary": ("List has item "+ str(len(list)) + "As Below : "),
         "ListItem": list,
     }
-
+    # return HttpResponse("hello Home Page")
     return render(request, 'BlogApp/Home.html',context)

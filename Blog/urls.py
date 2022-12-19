@@ -39,7 +39,7 @@ urlpatterns = [
     path('files', vw_Files),
     path('admin/', admin.site.urls),
     path('user/', include("User.urls")),
-    path('post/', include("Post.urls")),
+    path('post/', include("Post.urls"), name='post'),
     
 ]
 

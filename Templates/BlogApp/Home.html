@@ -2,19 +2,21 @@
 
 {% block content %}
 <!-- <div style="border: 1px solid #000;"> -->
-    
-    <h1>This is the Body</h1>
+    <h1>Welcome {{Name}}!!!</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <small {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</small>
+        {% endfor %}
+    {% endif %}
+
+    <!-- <h1>This is the Body</h1>
     <p>Here is where you put stuff that should be in the Body of your websites</p>
-    
-
-
     <p>
         {{Content1}}</br>
         {{Content2}}</br>
         {{ListSummary}}</br></br>
         {% include 'BlogApp/snippets/BodySnippets.html' with List=ListItem %}
-
-    </p>
+    </p> -->
 <!-- </div> -->
 
 

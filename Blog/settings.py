@@ -26,7 +26,7 @@ SECRET_KEY = 'w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['demoblogapp.azurewebsites.net','127.0.0.1']    #demoblogapp.azurewebsites.net
+ALLOWED_HOSTS = ['demoblogapp.azurewebsites.net','127.0.0.1','localhost']    #demoblogapp.azurewebsites.net
 
 
 # Application definition
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-AUTH_USER_MODEL = 'User.User'
+# AUTH_USER_MODEL = 'User.User'
 WSGI_APPLICATION = 'Blog.wsgi.application'
 
 

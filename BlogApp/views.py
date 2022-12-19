@@ -4,24 +4,27 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 # Create your views here.
 def home_screen_veiw(request):
-    list = []
-    list.append("Ist Item")
-    list.append("2nd Item")
-    list.append("3rd Item")
-    list.append("4th Item")
-    list.append("5th Item")
-    list.append("6th Item")
-    list.append("7th Item")
+    if request.user.is_authenticated:
 
-    context = {
-        "Content1": "This is First Conent",
-        "Content2": "This is Second Content",
-        "ListSummary": ("List has item "+ str(len(list)) + "As Below : "),
-        "ListItem": list,
-    }
+        list = []
+        list.append("Ist Item")
+        list.append("2nd Item")
+        list.append("3rd Item")
+        list.append("4th Item")
+        list.append("5th Item")
+        list.append("6th Item")
+        list.append("7th Item")
 
-
-    return render(request, 'BlogApp/Home.html',context)
+        context = {
+            "Content1": "This is First Conent",
+            "Content2": "This is Second Content",
+            "ListSummary": ("List has item "+ str(len(list)) + "As Below : "),
+            "ListItem": list,
+            "Name": request.user
+        }
+        return render(request, 'BlogApp/Home.html',context)
+    else:
+        return redirect('login')
 
 def vw_Upload(request):
     if request.method =="POST":

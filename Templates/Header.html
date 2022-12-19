@@ -57,21 +57,31 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li ><a href="/">Home</a></li>
+            {% if request.user.is_authenticated %}
+              <li ><a href="/">Home</a></li>
+              <li><a class="dropdown-item" href="/user/">View User</a></li>
+              <li><a class="dropdown-item" href="/post/">View</a></li>
+              <li><a class="dropdown-item" href="/post/create">Post</a></li>
+            {% endif %}
             <!-- <li><a href="#">About</a></li>
             <li><a href="#">Projects</a></li>
             <li><a href="#">Contact</a></li> -->
-            <li><a class="dropdown-item" href="/user/">View User</a></li>
+            {% if not request.user.is_authenticated %}
             <li><a class="dropdown-item" href="/user/create">Create User</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/user/login">Login User</a></li>
             <li><a class="dropdown-item" href="/user/forget">Forget User</a></li>
-            <li><a class="dropdown-item" href="/post/">View</a></li>
-            <li><a class="dropdown-item" href="/post/create">Post</a></li>
+            {% endif  %}
         </ul>
         
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'login'%}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+            <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          {% endif %}
+
         </ul>
       </div>
       

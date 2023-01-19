@@ -1,0 +1,19 @@
+<div class="cols-xs-1 cols-sm-2 cols-md-3">
+    <div class="card" >
+    <img src='{{ product.image }}' class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 id="namepr{{product.id}}" class="card-title">{{product.name|slice:"0:20"}}</h5>
+      <p class="card-text">{{product.desc|slice:"0:50"}}...</p>
+      <p class="card-price"><span>MRP. </span><span id="pricepr{{product.id}}" class="price-tag">{{ product.price }} </span>Rs/-</p>
+      <div class="rows">
+        <div class="cols-sm-1 cols-sm-2 cols-md-2 ">
+          <span id="divpr{{product.id}}" class="divpr">
+            <a id="pr{{product.id}}" href="#" class="btn btn-primary cart">Add to Cart</a>
+          </span>
+          <a id="pr{{product.id}}" href="/shops/productDetails/{{product.id}}" class="btn btn-primary">Details</a>
+        </div>
+      </div>
+    </div>
+    
+    </div>
+</div>

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'BlogApp',
     'Post',
     'User',
+    'shops',
     # Django App
     'django.contrib.admin',
     'django.contrib.auth',
@@ -139,6 +140,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'media')
 ]
 STATIC_URL = '/static/'
-MEDIA_URL = '/xmhdnSBHSINCGxnhgimsqjflnxjgso/'
+MEDIA_URL = '/shops/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')

@@ -1,0 +1,39 @@
+{% extends 'Base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+
+{% block content%}
+{% load static %}
+
+
+<div class="container">
+    <div class="row"><h5 id="namepr{{product.id}}" style=" background-color: rgba(128, 128, 128, 0.055);">{{product.name}}</h5></div>
+    <div class="row" style="padding: 0px; background-color: rgba(128, 128, 128, 0.055);text-align: left;">
+    <div class="col-md-1 border border-round">
+        Product Images List
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 align-item-center" >
+        <div class="row">
+            <img src='/shops/{{product.image}}' class="product-detailed-image img-thumbnail img-responsive" alt="...">
+        </div>
+    </div>
+    <div class="col-xs-5 col-sm-5 col-md-5 mx-25 border border-round"  >
+        <h4 class="text-align-left">Product Description</h4>
+        <h6>{{product.title}}</h6>
+        <p>{{product.desc}}</p>
+        
+        <div class="cols-sm-2 cols-sm-2 cols-md-2 position-absolute bottom-0 my-5" >
+            <p class="card-price"><span>MRP. </span><span id="pricepr{{product.id}}" class="price-tag">{{ product.price }}</span> Rs/-</p>
+            <a id="pr{{product.id}}" href="#" class="btn btn-primary cart">Buy Now</a>
+            <span id="divpr{{product.id}}" class="divpr">
+                <a id="pr{{product.id}}" href="#" class="btn btn-primary cart">Add to Cart</a>
+            </span>
+            <a id="pr{{product.id}}" href="#" class="btn btn-primary">Add to wish List</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+{% endblock content%}

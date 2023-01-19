@@ -1,0 +1,41 @@
+{% extends 'Base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+
+{% block content%}
+{% load static %}
+
+
+<div class="container my-2 border border-round ">
+    <div class="row">
+        <div class="col-sm-8 col-sm-8 col-md-8 my-2">
+            <h5>Your Cart(s)</h5>
+        </div>    
+        <div class="col-sm-4 col-sm-4 col-md-4 my-2" style="text-align: right;" >
+            <a id="btnclearCart" class="btn btn-primary btn-sm clearCart text-align-right ">Remove All Items</a>
+        </div>
+    </div>
+<div class="row">
+    <div id="cartcontainer" class="text-center"></div>
+    <div class="table-responsive ">
+          
+    <table class="table" id="tblCart">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="cartDetail" class="divpr"> 
+        </tbody>
+      </table>
+    </div>
+</div>
+</div>
+{% endblock content%}

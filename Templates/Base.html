@@ -1,16 +1,143 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
+    <style type="text/css">
+      .grow {
+    flex: 1;
+    }
+
+.main {
+    overflow-y: auto;
+    overflow-x:auto;
+}
+body{
+  padding: 0px;
+  margin: 0px;
+}
+    .carousel-item{
+        padding: 0;
+        margin: -10px;
+        display: block;
+        /* background-color: aqua; */
+        
+    }
+    .carousel-inner{
+        position: relative;
+        width: auto!important;
+        margin-left: 2.5cm;
+    }
+    .card{ 
+        min-width: 30%;
+        max-width: 100%;
+        padding: 0; 
+        width: 100%!important;
+        background-color: rgba(234, 231, 231, 0.657)!important;
+        --bs-card-spacer-y: 1rem; 
+        margin: 15%!important;  
+        margin-left: 4%!important;
+        font-size: 1rem;
+    }
+    .card .card-body{
+        line-height: 1em;
+    }
+    .card .card-body h5{
+        font-size: 1rem;
+        font-weight: bolder;
+    }
+
+    .card .card-body p{
+        font-size: 0.80rem;
+        width: 200px;
+        height: 10px;
+        font-weight: lighter;
+        max-lines: 3;
+    }
+
+    .card .card-body .card-price{
+        position:relative;
+        line-height: 3em;
+        font-weight: normal;
+        color: rgba(255, 55, 0, 0.826);
+    }
+    .cols-md-3{
+        display: inline-block;
+        margin-left: 0;
+        /* background-color: bisque; */
+    }
+
+    .card .card-body .btn-primary{
+        margin-top: 10px!important;
+        margin: 3px;
+    }
+
+    .cols-md-3 img{
+        width: 250px!important;
+        height: 150px!important;
+        text-align: center!important;
+    }
+
+    .carousel-indicators{
+        margin-bottom: -1.5rem!important;
+        background-color: rgba(233, 235, 236, 0.307);
+        width: 100%;
+        margin-left: 0px!important;
+        margin-right: 0px!important;
+    }
+    .card-text{
+        
+        text-align: left!important;
+    }
+
+    .carousel-control-next, .carousel-control-prev{
+        background-color: rgba(233, 235, 236, 0.307)!important;
+        width: 5%!important;
+        
+    }
+
+    .carousel-indicators [data-bs-target] {
+        background-color: #0d6efd!important;
+    }
+
+    .product-cat{
+       font-size: 1.10rem; 
+       font-weight: bold;
+    }
+
+    .cart-summary{
+      color: red;
+      font-size: smaller;
+    }
+
+    .popover-header {
+    padding: var(--bs-popover-header-padding-y) var(--bs-popover-header-padding-x);
+    margin-bottom: 0;
+    font-size: var(--bs-popover-header-font-size);
+    color: var(--bs-popover-header-color);
+    background-color: #0d6efd!important;
+    border-bottom: var(--bs-popover-border-width) solid var(--bs-popover-border-color);
+    border-top-left-radius: var(--bs-popover-inner-border-radius);
+    border-top-right-radius: var(--bs-popover-inner-border-radius);
+    }
+
+    .product-detailed-image{
+        width: 600px!important;
+        height: 500px!important;
+        text-align: center;
+    }
+
+</style>
+
+
+    {% block header %}
+    {% endblock header%}
     {% include 'Header.html'%}
     <body>
-      <div class="container-fluid text-center">    
-        <div class="row content">
-          <div class="col-sm-2 sidenav">
-            <!-- <p><a href="#">Link</a></p>
-            <p><a href="#">Link</a></p>
-            <p><a href="#">Link</a></p> -->
-          </div>
-          <div class="col-sm-8 text-left "> 
+      <div class="row">    
+        <div class="">
+          <!-- <div class="col-sm-1 sidenav" style="background-color: beige;">
+            
+          </div> -->
+          <div class="col-sm-10 main w-100"> 
               {% block content %}
               {% endblock content %}
             <!-- <h1>Welcome</h1>
@@ -19,17 +146,192 @@
             <h3>Test</h3>
             <p>Lorem ipsum...</p> -->
           </div>
-          <div class="col-sm-2 sidenav">
-            <!-- <div class="well">
-              <p>ADS</p>
-            </div>
-            <div class="well">
-              <p>ADS</p>
-            </div> -->
-          </div>
+          <!-- <div class="col-sm-1 sidenav" style="background-color: beige;"> 
+            
+          </div> -->
         </div>
-      </div>        
         
-    </body>
-    {% include 'Footer.html'%}
+      </div>        
+      
+        {% include 'Footer.html'%} 
+    
+      <script type="text/javascript">
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+        let  cart = [];
+        if (localStorage.getItem('cart')==null){
+          cart = [];
+          UpdatePopoverCart(cart);
+        }
+        else{
+          cart = JSON.parse(localStorage.getItem('cart'));
+          document.getElementById("cart").innerHTML=Object.keys(cart).length;
+          updateCart(cart);
+          UpdatePopoverCart(cart);
+        }
+
+        $(".cart").click(function(){
+          var idstr = this.id.toString();
+          let objcart = cart.find(cart => cart.id === idstr);
+          if (objcart==undefined){
+            var singleObj = {};
+            singleObj['id'] = idstr;
+            singleObj['name'] = document.getElementById("name"+idstr).innerHTML;
+            singleObj['qty'] = 1;
+            singleObj['price'] = document.getElementById("price"+idstr).innerHTML;
+            cart.push(singleObj);       
+          }
+          else
+          {
+            let new_updated_data = cart.map((product) => {
+            if (product.id === idstr) {
+                return {
+                  id : idstr,
+                  name : product.name,
+                  qty : product.qty+1,
+                  price : product.price
+                };
+            }
+            cart = new_updated_data ;
+            });
+          }
+          updateCart(cart);
+        });
+
+        function updateCart(cart){
+          cart.map((product) => {
+            if (document.getElementById("div"+product.id) != null) {
+              document.getElementById("div"+product.id).innerHTML = "<button id='minus"+ product.id +"'  class='btn btn-primary btn-sm minus'>-</button><span id='val"+ product.id +"' class='my-4' >"+ product.qty +"</span><button id='plus"+ product.id +"' class='btn btn-primary btn-sm plus'>+</button>";
+            }
+            });
+
+          localStorage.setItem('cart', JSON.stringify(cart));
+          document.getElementById("cart").innerHTML=Object.keys(cart).length;
+          UpdatePopoverCart(cart);
+        }
+
+        $(".divpr").on("click", "button.minus", function(){
+          pid = this.id.slice(5,);
+          let new_updated_data = cart.map((product) => {
+            if (product.id === pid) {
+                return {
+                  id : pid,
+                  name : product.name,
+                  qty : Math.max(0,product.qty-1),
+                  price : product.price
+                };
+                document.getElementById("val"+a).innerHTML = product.qty;
+            }
+            return product;
+            });
+          cart = new_updated_data ;  
+          updateCart(cart);
+          loadCart(cart);
+        });
+
+        $(".divpr").on("click", "button.plus", function(){
+          pid = this.id.slice(4,);
+          let new_updated_data = cart.map((product) => {
+            if (product.id === pid) {
+                return {
+                  id : pid,
+                  name : product.name,
+                  qty : product.qty+1,
+                  price : product.price
+                };
+                document.getElementById("val"+a).innerHTML = product.qty;
+            }
+            return product;
+            });
+          cart = new_updated_data ;  
+          updateCart(cart);
+          loadCart(cart);
+        });
+
+
+        function RemoveCartProduct(e){
+          const removeIndex = cart.findIndex( item => item.id === e.id );
+          cart.splice( removeIndex, 1 );
+          UpdatePopoverCart(cart);
+          loadCart(cart);
+        };
+        
+        function UpdatePopoverCart(cart){
+          var popStrCart ="";
+          popStrCart = popStrCart + "<h6>Cart for your items in my shopping cart</h6>";
+          var i=1;
+          cart.map((product) => {
+            popStrCart = popStrCart + "<b>"+i+"- </b>";
+            popStrCart = popStrCart + product.name +  " | Qty -" + product.qty + "<br/>";
+            i=i+1;
+          });  
+
+          if (cart.length>0){
+            popStrCart = popStrCart + "<div class='cols-sm-2 cols-sm-2 cols-md-2 mt-3 pd-2'>";
+
+            popStrCart = popStrCart + "<a id='btncheckout' href='/shops' class='btn btn-primary mx-1'>Shops</a>";
+            popStrCart = popStrCart + "<a id='btnclearCart' href='/shops/productCarts/' class='btn btn-primary mx-1 clearCart' onclick='clearCarts();'>Go to Cart</a>";
+            popStrCart = popStrCart + "</div>";
+            }
+          document.getElementById('popcart').setAttribute('data-bs-content',popStrCart);
+        }
+
+        loadCart(cart);
+        function loadCart(cart){
+          var popStrCart ="";
+          popStrCart = popStrCart + "<h6>Cart for your items in my shopping cart</h6>";
+          var i=1;
+          totalValue=0;
+          if (cart.length>0){
+            popStrCart="";
+          cart.map((product) => {
+            popStrCart = popStrCart + "<tr>";
+            popStrCart = popStrCart + "<th scope='row'>"+i+"</th>";
+            popStrCart = popStrCart + "<td>"+ product.name +  "</td>";
+            popStrCart = popStrCart + "<td><span id='div" + product.id + "' class='divpr'>" + "<button id='minus"+ product.id +"'  class='btn btn-primary btn-sm minus'>-</button> <span id='val"+ product.id +"' class='my-4' >"+ product.qty +"</span> <button id='plus"+ product.id +"' class='btn btn-primary btn-sm plus'>+</button>" + "</span></td>";
+            popStrCart = popStrCart + "<td>"+ product.price +  " Rs/-</td>";
+            popStrCart = popStrCart + "<td>"+  parseFloat(parseInt(product.qty)*parseFloat(product.price)).toFixed(2) + " Rs/-</td>";
+            totalValue = parseFloat(parseFloat(totalValue) + (parseInt(product.qty)*parseFloat(product.price).toFixed(2))).toFixed(2);
+            popStrCart = popStrCart + "<td><button type='button' id='"+ product.id +"' class='btn btn-primary btn-sm removeprd' onclick='RemoveCartProduct(this);' >Remove</button></td>";
+            popStrCart = popStrCart + "</tr>";
+            i=i+1;
+            
+          });
+          popStrCart = popStrCart + "<tr>";
+            popStrCart = popStrCart + "<th scope='row'></th>";
+            popStrCart = popStrCart + "<td></td>";
+            popStrCart = popStrCart + "<td></td>";
+            popStrCart = popStrCart + "<th scope='row'>Total Value</td>";
+            popStrCart = popStrCart + "<th scope='row'>"+ totalValue +" Rs/-</td>";
+            popStrCart = popStrCart + "<td></td>";
+            popStrCart = popStrCart + "</tr>";
+          }
+          else{
+            if (document.getElementById("tblCart") != null) {
+              document.getElementById("cartcontainer").innerHTML = "<h4>Ooops no Item in your cart!!!</h4>";
+              $("#tblCart").hide();
+              $("#btnclearCart").hide();
+              
+              document.getElementById("cartDetail").innerHTML = popStrCart;
+            }  
+            
+          }
+          if (document.getElementById("cartDetail") != null) {
+              document.getElementById("cartDetail").innerHTML = popStrCart;
+            }  
+        }
+
+
+        $(".clearCart").on("click", function(){
+          localStorage.clear();
+          cart = [];
+          UpdatePopoverCart(cart);
+          loadCart(cart);
+      });
+
+      
+
+      </script>
+      </body>
 </html>

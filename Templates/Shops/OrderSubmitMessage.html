@@ -1,0 +1,34 @@
+{% extends 'Base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+
+{% block content%}
+{% load static %}
+
+
+<div class="container-fluid my-2">
+<div class="container">
+    {% if Status == 'Success' %}
+    <div class="row text-bg-success" >
+        <div class="col-md-12 col-md-12 text-center p-5">
+            <h4 class="text-bg-success">Thank you for ordering with us. your order placed successfully..</h4>
+            <p>please save order reference for further reference to track further with us.</p>
+            <p>order ref : {{OrderID}} </p>
+            <p>click below to continue shopping</p>
+            <a id='btngotoShop' href='/shops' class='btn btn-primary mx-1'>Shop now</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="row text-bg-warning">
+        <div class="col-md-12 col-md-12 text-center p-5">
+            <h6 class="text-bg-warning">Your order failed to process..  </h6>
+            <p>Please write a mail to suport below support@support.com</p>
+        </div>
+    </div>    
+    {% endif %}
+</div>
+</div>
+
+{% endblock content%}

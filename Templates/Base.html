@@ -59,6 +59,19 @@ body{
         font-weight: normal;
         color: rgba(255, 55, 0, 0.826);
     }
+
+    .pricesummary{ 
+        min-width: 30%;
+        max-width: 100%;
+        padding: 0; 
+        width: 100%!important;
+        background-color: #FFF!important;
+        --bs-card-spacer-y: 1rem; 
+        margin: 0!important;  
+        margin-left: 0%!important;
+        font-size: 1rem;
+    }    
+
     .cols-md-3{
         display: inline-block;
         margin-left: 0;
@@ -162,6 +175,7 @@ body{
         let  cart = [];
         if (localStorage.getItem('cart')==null){
           cart = [];
+          document.getElementById("cart").innerHTML="0";
           UpdatePopoverCart(cart);
         }
         else{
@@ -253,21 +267,38 @@ body{
         function RemoveCartProduct(e){
           const removeIndex = cart.findIndex( item => item.id === e.id );
           cart.splice( removeIndex, 1 );
+          updateCart(cart);
           UpdatePopoverCart(cart);
           loadCart(cart);
         };
         
         function UpdatePopoverCart(cart){
           var popStrCart ="";
+          checkOutOrderSummary =""
           popStrCart = popStrCart + "<h6>Cart for your items in my shopping cart</h6>";
           var i=1;
           cart.map((product) => {
-            popStrCart = popStrCart + "<b>"+i+"- </b>";
-            popStrCart = popStrCart + product.name +  " | Qty -" + product.qty + "<br/>";
+            // popStrCart = popStrCart + "<b>"+i+"- </b>";
+            // popStrCart = popStrCart + product.name +  " | Qty -" + product.qty + "<br/>";
+            
+            checkOutOrderSummary = checkOutOrderSummary + " <li class='list-group-item d-flex justify-content-between align-items-start'> ";
+            checkOutOrderSummary = checkOutOrderSummary + "   <div class='ms-2 me-auto'> ";
+            // checkOutOrderSummary = checkOutOrderSummary + "   <div class='fw-bold'>"+ product.name +  "</div> ";
+            checkOutOrderSummary = checkOutOrderSummary + " "+  product.name  +" ";
+            checkOutOrderSummary = checkOutOrderSummary + " </div> ";
+            checkOutOrderSummary = checkOutOrderSummary + " <span class='badge bg-primary rounded-pill'>" + product.qty +"</span> ";
+            checkOutOrderSummary = checkOutOrderSummary + " </li> ";
+
             i=i+1;
           });  
 
           if (cart.length>0){
+
+            popStrCart = popStrCart + " <ol id='cartPopOverOrderSummary' class='list-group list-group-numbered'> ";
+            popStrCart = popStrCart + checkOutOrderSummary;
+            popStrCart = popStrCart + " </ol> ";  
+
+
             popStrCart = popStrCart + "<div class='cols-sm-2 cols-sm-2 cols-md-2 mt-3 pd-2'>";
 
             popStrCart = popStrCart + "<a id='btncheckout' href='/shops' class='btn btn-primary mx-1'>Shops</a>";
@@ -283,35 +314,70 @@ body{
           popStrCart = popStrCart + "<h6>Cart for your items in my shopping cart</h6>";
           var i=1;
           totalValue=0;
+          totalItemCount= 0;
+          totalDiscount = 0;
+          totalShippment = 0;
           if (cart.length>0){
             popStrCart="";
-          cart.map((product) => {
+            checkOutOrderSummary = ""
+            cart.map((product) => {
+              popStrCart = popStrCart + "<tr>";
+              popStrCart = popStrCart + "<th scope='row'>"+i+"</th>";
+              popStrCart = popStrCart + "<td>"+ product.name +  "</td>";
+              popStrCart = popStrCart + "<td><span id='div" + product.id + "' class='divpr'>" + "<button id='minus"+ product.id +"'  class='btn btn-primary btn-sm minus'>-</button> <span id='val"+ product.id +"' class='my-4' >"+ product.qty +"</span> <button id='plus"+ product.id +"' class='btn btn-primary btn-sm plus'>+</button>" + "</span></td>";
+              popStrCart = popStrCart + "<td>₹"+ product.price +  " Rs/-</td>";
+              popStrCart = popStrCart + "<td>₹"+  parseFloat(parseInt(product.qty)*parseFloat(product.price)).toFixed(2) + " Rs/-</td>";
+              totalValue = parseFloat(parseFloat(totalValue) + (parseInt(product.qty)*parseFloat(product.price).toFixed(2))).toFixed(2);
+              popStrCart = popStrCart + "<td><button type='button' id='"+ product.id +"' class='btn btn-primary btn-sm removeprd' onclick='RemoveCartProduct(this);' >Remove</button></td>";
+              popStrCart = popStrCart + "</tr>";
+
+              checkOutOrderSummary = checkOutOrderSummary + " <li class='list-group-item d-flex justify-content-between align-items-start'> ";
+              checkOutOrderSummary = checkOutOrderSummary + "   <div class='ms-2 me-auto'> ";
+              checkOutOrderSummary = checkOutOrderSummary + "   <div class='fw-bold'>"+ product.name +  "</div> ";
+              // checkOutOrderSummary = checkOutOrderSummary + " Content for list item ";
+              checkOutOrderSummary = checkOutOrderSummary + " </div> ";
+              checkOutOrderSummary = checkOutOrderSummary + " <span class='badge bg-primary rounded-pill'>"+ parseInt(product.qty) +"</span> ";
+              checkOutOrderSummary = checkOutOrderSummary + " </li> ";
+
+
+              totalItemCount = totalItemCount + parseInt(product.qty)  
+              totalDiscount = totalDiscount + 0;
+              totalShippment = totalShippment + 0;
+              i=i+1;
+              
+            });
             popStrCart = popStrCart + "<tr>";
-            popStrCart = popStrCart + "<th scope='row'>"+i+"</th>";
-            popStrCart = popStrCart + "<td>"+ product.name +  "</td>";
-            popStrCart = popStrCart + "<td><span id='div" + product.id + "' class='divpr'>" + "<button id='minus"+ product.id +"'  class='btn btn-primary btn-sm minus'>-</button> <span id='val"+ product.id +"' class='my-4' >"+ product.qty +"</span> <button id='plus"+ product.id +"' class='btn btn-primary btn-sm plus'>+</button>" + "</span></td>";
-            popStrCart = popStrCart + "<td>"+ product.price +  " Rs/-</td>";
-            popStrCart = popStrCart + "<td>"+  parseFloat(parseInt(product.qty)*parseFloat(product.price)).toFixed(2) + " Rs/-</td>";
-            totalValue = parseFloat(parseFloat(totalValue) + (parseInt(product.qty)*parseFloat(product.price).toFixed(2))).toFixed(2);
-            popStrCart = popStrCart + "<td><button type='button' id='"+ product.id +"' class='btn btn-primary btn-sm removeprd' onclick='RemoveCartProduct(this);' >Remove</button></td>";
-            popStrCart = popStrCart + "</tr>";
-            i=i+1;
-            
-          });
-          popStrCart = popStrCart + "<tr>";
-            popStrCart = popStrCart + "<th scope='row'></th>";
-            popStrCart = popStrCart + "<td></td>";
-            popStrCart = popStrCart + "<td></td>";
-            popStrCart = popStrCart + "<th scope='row'>Total Value</td>";
-            popStrCart = popStrCart + "<th scope='row'>"+ totalValue +" Rs/-</td>";
-            popStrCart = popStrCart + "<td></td>";
-            popStrCart = popStrCart + "</tr>";
+              popStrCart = popStrCart + "<th scope='row'></th>";
+              popStrCart = popStrCart + "<td></td>";
+              popStrCart = popStrCart + "<td></td>";
+              popStrCart = popStrCart + "<th scope='row'>Total Value</td>";
+              popStrCart = popStrCart + "<th scope='row'>₹"+ totalValue +" Rs/-</td>";
+              popStrCart = popStrCart + "<td></td>";
+              popStrCart = popStrCart + "</tr>";
+
+              if (document.getElementById("checkoutItemCount") != null) {
+                document.getElementById("checkoutItemCount").innerHTML = totalItemCount;
+                document.getElementById("checkoutTotalValue").innerHTML = parseFloat(totalValue).toFixed(2);
+                document.getElementById("checkoutDiscount").innerHTML = parseFloat(totalDiscount).toFixed(2);
+                if (totalShippment>0){
+                  document.getElementById("checkoutShippmentCharges").innerHTML = parseFloat(totalShippment).toFixed(2);
+                }
+                
+                totalFinalValue = (totalValue - totalDiscount) + totalShippment;
+                document.getElementById("spnTotalPrice").innerHTML =  parseFloat(totalFinalValue).toFixed(2);
+                document.getElementById("checkoutSaved").innerHTML =  parseFloat(totalDiscount).toFixed(2);
+
+                document.getElementById("checkoutOrderSummary").innerHTML= checkOutOrderSummary;
+              }
+              
+              
           }
           else{
             if (document.getElementById("tblCart") != null) {
-              document.getElementById("cartcontainer").innerHTML = "<h4>Ooops no Item in your cart!!!</h4>";
+              document.getElementById("cartcontainer").innerHTML = "<h4>Ooops no Item in your cart!!!</h4><br/><h8>Add items to it now...</h8></br><a id='btngotoShop' href='/shops' class='btn btn-primary mx-1'>Shop now</a>";
               $("#tblCart").hide();
               $("#btnclearCart").hide();
+              $("#btnChekout").hide();
               
               document.getElementById("cartDetail").innerHTML = popStrCart;
             }  
@@ -324,14 +390,220 @@ body{
 
 
         $(".clearCart").on("click", function(){
+          ClearCart();
+        });
+
+        function ClearCart(){
+          document.getElementById("cart").innerHTML="0";
           localStorage.clear();
           cart = [];
           UpdatePopoverCart(cart);
           loadCart(cart);
-      });
+        }
+
+        $("#btContinueCheckOut").on("click", function(){
+          HidleLoginPannel();
+          EnableDeliveryPannel();
+          SaveCheckOutSteps(1);
+        });
+
+        function EnableLoginPannel(){
+          $("#btnCollapseLogIn").attr("data-bs-toggle", "collapse");
+
+          // $("#panelsLogin-collapseOne").removeClass("hide");
+          $("#panelsLogin-collapseOne").addClass("collapse");
+          $("#panelsLogin-collapseOne").addClass("show");
+        }
+
+        function HidleLoginPannel(){
+          $("#panelsLogin-collapseOne").removeClass("show");
+          $("#panelsLogin-collapseOne").addClass("collapse");
+          $("#panelsLogin-collapseOne").addClass("hide");
+        }
+
+        function EnableDeliveryPannel(){
+          $("#btnCollapseDelivery").attr("data-bs-toggle", "collapse");
+
+          $("#panelsDeliveryAddress-collapseTwo").removeClass("hide");
+          $("#panelsDeliveryAddress-collapseTwo").addClass("collapse");
+          $("#panelsDeliveryAddress-collapseTwo").addClass("show");
+        }
+
+        $(".deliver_here").on("click", function(){
+          // alert(this.attr("addID"));
+          addID =$("#"+this.id).attr("addID");
+          DeliverHere(addID);
+        });
+
+        function DeliverHere(addID){
+          localStorage["addID"]=addID;
+          $("#hdnAddressID").val(addID);
+          HideDeliveryPannel();
+          EnableOrderSummaryPannel();
+          SaveCheckOutSteps(2);
+        }
 
       
+        function HideDeliveryPannel(){
+          $("#panelsDeliveryAddress-collapseTwo").removeClass("show");
+          $("#panelsDeliveryAddress-collapseTwo").addClass("collapse");
+          $("#panelsDeliveryAddress-collapseTwo").addClass("hide");
+        }
+
+        function EnableOrderSummaryPannel(){
+          $("#btnOrderSummary").attr("data-bs-toggle", "collapse");
+
+          $("#panelsOrderSummary-collapseThree").removeClass("hide");
+          $("#panelsOrderSummary-collapseThree").addClass("collapse");
+          $("#panelsOrderSummary-collapseThree").addClass("show");          
+        }
+
+
+        $("#btContinueHere").on("click", function(){
+          HideOrderSummaryPannel();
+          EnablePaymentPannel();
+          SaveCheckOutSteps(3);
+        });
+      
+        function HideOrderSummaryPannel(){
+          $("#panelsOrderSummary-collapseThree").removeClass("show");
+          $("#panelsOrderSummary-collapseThree").addClass("collapse");
+          $("#panelsOrderSummary-collapseThree").addClass("hide");
+        }
+
+        function EnablePaymentPannel(){
+          $("#btnPayment").attr("data-bs-toggle", "collapse");
+
+          $("#panelsPayment-collapseFour").removeClass("hide");
+          $("#panelsPayment-collapseFour").addClass("collapse");
+          $("#panelsPayment-collapseFour").addClass("show");          
+        }
+
+        $("#btnAddNewAddress").on("click", function(){
+          $("#pannelAddNewAddress").hide();
+          $("#pannelAddAddress").show();
+        });
+
+        $("#formAddress").submit(function(event){
+          var formData = {
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            'name': $('input[name=name]').val(),
+            'mobile_no': $('input[name=mobile_no]').val(),
+            'pincode': $('input[name=pincode]').val(),
+            'locality': $('input[name=locality]').val(),
+            'addressDetail': $('textarea[name=addressDetail]').val(),
+            'citydistricttown': $('input[name=citydistricttown]').val(),
+            'stateID': $('select[name=stateID]').val(),
+            'landmark': $('input[name=landmark]').val(),
+            'alternatePhone': $('input[name=alternatePhone]').val(),
+            'addressType': $('input[name=addressType]').val()
+          }
+
+          $.ajax({
+            type:'POST',
+            url:'/shops/saveAddress/',
+            data:formData,
+            encode:true
+
+          }).done(function(data){
+            data= JSON.parse(data) ;
+            console.log(data);
+            if (data.Status=="Success")  {
+              
+              $("#pannelAddNewAddress").show();
+              $("#pannelAddAddress").hide();
+              DeliverHere(data.Address.id);
+              window.location = window.location;
+            }
+            else{
+              alert(data.Status);
+            }
+          });
+          event.preventDefault();
+        });
+
+        loadAddressList();
+        function loadAddressList(){
+          $("#hdnAddressID").val(localStorage["addID"]);
+          // const params = new URLSearchParams(window.location.search);
+          // if (params.has('addrid')){
+          //   alert( params.get('addrid'))
+          // }
+        }
+
+
+        $(".radAddress").on("click", function(){
+            $(".radAddress").each(function(){
+              ids = this.id
+              $("#pannelAddAddress").hide();
+              $("#pannelAddNewAddress").show();
+              $("#pannelAddress"+ids).hide();
+              $("#spnAddType"+ids).hide();
+              $("#spnEditAddress"+ids).hide();
+              $("#spnDeleteAddress"+ids).hide();
+              
+              
+            })
+            id = this.id;
+            $("#pannelAddress"+id).show();
+            $("#spnAddType"+id).show();
+            $("#spnEditAddress"+id).show();
+            $("#spnDeleteAddress"+id).show();
+            
+        })
+
+        CheckOutSteps();
+        function CheckOutSteps(){
+          checkoutStep = localStorage["checkOutSteps"];
+          addID =localStorage["addID"];
+          
+          $("#"+ addID).prop('checked', true);
+          $("#"+ addID).click();
+
+          $("#hdnAddressID").val(addID);
+          $("#hdnTotalAmmount").val($("#spnTotalPrice").html());
+          $("#hdnCartsItems").val(JSON.stringify(cart));
+          
+          if (checkoutStep == "1"){
+            EnableLoginPannel();
+            HidleLoginPannel();
+            EnableDeliveryPannel();
+          }
+          else if (checkoutStep == "2"){
+            EnableLoginPannel();
+            HidleLoginPannel();
+            EnableDeliveryPannel();
+            HideDeliveryPannel();
+            
+            EnableOrderSummaryPannel();
+          }
+          else if (checkoutStep == "3"){
+            EnableLoginPannel();
+            HidleLoginPannel();
+            EnableDeliveryPannel();
+            HideDeliveryPannel();
+            EnableOrderSummaryPannel();
+            HideOrderSummaryPannel();
+
+            EnablePaymentPannel();
+          }
+          else if (checkoutStep == "4"){
+          }
+          else
+          {
+            EnableLoginPannel();
+          }
+        }
+
+        function SaveCheckOutSteps(step){
+          localStorage["checkOutSteps"] =step;
+        }
+
+        {% if Status == 'Success' %}
+            ClearCart();
+        {% endif %}
 
       </script>
+        
       </body>
 </html>

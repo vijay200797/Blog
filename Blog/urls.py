@@ -41,6 +41,7 @@ urlpatterns = [
     path('user/', include("User.urls")),
     path('post/', include("Post.urls"), name='post'),
     path('shops/', include("shops.urls"), name='shops'),
+
     
 ]
 

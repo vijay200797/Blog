@@ -1,0 +1,95 @@
+<form action="#" id="formAddress" method="post"> 
+    <!-- /shops/saveAddress/ -->
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12 p-3 border rounded bg-light">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+            <div class="col">
+                <div class="form-outline">
+                    <input type="text" id="name" name="name" class="form-control" required placeholder="Name" aria-label="Name">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-outline">
+                    <input type="number" id="mobile_no" name="mobile_no" class="form-control" required placeholder="10 Digit Mobile Number" aria-label="mobile_no">
+                </div>
+            </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                <div class="form-outline">
+                    <input type="number" id="pincode" name="pincode" class="form-control" required placeholder="Pin Code" aria-label="pincode">
+                </div>
+                </div>
+                <div class="col">
+                <div class="form-outline">
+                    <input type="text" id="locality" name="locality" class="form-control" required placeholder="Locality" aria-label="Locality">
+                </div>
+                </div>
+            </div>    
+        
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+                <textarea type="text" id="addressDetail" name="addressDetail" required class="form-control" rows="6" placeholder="Address (Area and Street)" aria-label="address"></textarea>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                <div class="form-outline">
+                    <input type="text" id="citydistricttown" name="citydistricttown" required class="form-control" placeholder="City/District/Town" aria-label="citydistricttown">
+                </div>
+                </div>
+                <div class="col">
+                <div class="form-outline">
+                    <select class="form-control form-select" id="stateID" name="stateID" required aria-label=".form-select-sm example">
+                        <option selected>State</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Punjab">Punjab</option>
+                    </select>
+                </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                <div class="form-outline">
+                    <input type="text" id="landmark" name="landmark" class="form-control" required  placeholder="Land Mark (optional)" aria-label="landmark">
+                </div>
+                </div>
+                <div class="col">
+                <div class="form-outline">
+                    <input type="number" id="alternatePhone" name="alternatePhone" required class="form-control" placeholder="Alternate Phone (optional)" aria-label="alternatePhone">
+                </div>
+                </div>
+            </div>    
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="addressType" checked="true" id="radioHome" value="H">
+                            <label class="form-check-label" for="inlineRadio1">Home (All day delivery)</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="addressType" id="radioOffice" value="O">
+                            <label class="form-check-label" for="inlineRadio2">Work (Delivery between 10 AM - 5 PM)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div class="row mb-4">
+                <div class="col-6">
+                <div class="form-outline">
+                    <button type="submit" class="btn btn-primary text-bg-warning mb-4">Save and Deliver Here</button>
+                </div>
+                </div>
+                <div class="col-6">
+                <div class="form-outline">
+                    <a id="hrefcancel" href="javascript:void(0);" class="my-5" >Cancel</a>
+                </div>
+                </div>
+            </div>   
+        </div>
+    </div>
+  </form> 

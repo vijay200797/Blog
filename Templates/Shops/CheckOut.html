@@ -1,0 +1,197 @@
+{% extends 'Base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+
+{% block content%}
+{% load static %}
+
+
+<div class="container-fluid my-2">
+<div class="container" >
+    
+    <div class="row">
+        <div class="col-md-8 col-sm-8" >
+        <div class="accordion text-bg-primary" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item ">
+                <h2 class="accordion-header text-bg-primary" id="panelsLogin-headingOne">
+                <button  id="btnCollapseLogIn" class="accordion-button text-bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#panelsLogin-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    1 Login
+                </button>
+                </h2>
+                <div id="panelsLogin-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body ">
+                    {% if request.user.is_authenticated %}
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 text-left">
+                            <a class="" href="{% url 'logout'%}">Logout & sign in to another account</a>
+                            <button id="btContinueCheckOut" class="btn btn-primary text-bg-warning m-3">Continue Checkout</button>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 text-left">
+                            <strong><span>You are not logged in please click below link to login..</span></strong>
+                            <a class="" href="{% url 'login'%}">Login here</a>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <span>Advantage of secure Login</span>
+                            <p class="fs-7">
+                                <span>Easily Track Order, Hassle Free Returns</span>
+                                <span>Get Relevant Alerts and Recommendation</span>
+                                <span>Wishlist, Reiews, Rating and more.</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button id="btnCollapseDelivery" class="accordion-button collapsed text-bg-primary" type="button" data-bs-toggle="" data-bs-target="#panelsDeliveryAddress-collapseTwo" aria-expanded="true" aria-controls="panelsDeliveryAddress-collapseTwo">
+                    2 Delivery Address
+                </button>
+                </h2>
+                <div id="panelsDeliveryAddress-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                    <div class="row p-2" id="dvAddressList">
+                        <!-- {{address}} -->
+                        {% for add in address %}
+                        <div class="form-check">
+                            <input class="form-check-input radAddress" type="radio"  name="AddressID" id="{{add.id}}" value="{{add.id}}">
+                            <label class="form-check-label w-100" for="Address{{add.id}}" >
+                              <div class="row" >
+                                    <div class="col-md-6 col-sm-6" >
+                                        <span>{{add.name}}</span> <span id="spnAddType{{add.id}}" class="badge bg-light text-dark">
+                                            {% if add.addressType == 'H' %}
+                                                Home
+                                            {% else %}
+                                                Office
+                                            {% endif %}
+                                        </span> <span>{{add.mobileNo}}</span>
+                                        <p>{{add.address}}</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-end" style="display: inline-block;" >
+                                        <form  action="/shops/deleteAddress/" method="post" id="formDeleteAddress">
+                                            {% csrf_token %}
+                                            <input type="hidden" id="hdnDeleteAddressID" name="hdnDeleteAddressID" value="{{add.id}}"/>
+                                            <spa id="spnDeleteAddress{{add.id}}"><input type="submit"  class="btn btn-primary btn-sm" value="Delete" /></span>
+                                        </form>
+                                            <span id="spnEditAddress{{add.id}}"><a href="#" class="btn btn-primary btn-sm">Edit</a></span>          
+                                    </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12 col-sm-12 " id="pannelAddress{{add.id}}" style="display: none;">
+                                    <button id="btDeliverHereAddress{{add.id}}" class="btn btn-primary text-bg-warning btn-sm deliver_here" addID="{{add.id}}" >DELIVER HERE</button>
+                                </div>
+                              </div>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div id="pannelAddNewAddress" class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <button id="btnAddNewAddress" class="btn btn-primary btn-sm text-bg-warning">Add New Address</button>
+                        </div>
+                    </div>
+                    <div id="pannelAddAddress" class="row" style="display: none;" >
+                        <div class="col-md-12 col-sm-12">
+                            {% include 'shops/snippets/AddAddress.html' with address='Addrss' %}
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button id="btnOrderSummary" class="accordion-button collapsed text-bg-primary" type="button" data-bs-toggle="" data-bs-target="#panelsOrderSummary-collapseThree" aria-expanded="false" aria-controls="panelsOrderSummary-collapseThree">
+                    3 Order Summary
+                </button>
+                </h2>
+                <div id="panelsOrderSummary-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <ol id="checkoutOrderSummary" class="list-group list-group-numbered">
+                                <!-- <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Subheading</div>
+                                    Content for list item
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">14</span>
+                                </li> -->
+                              </ol>
+                        </div>
+                    </div>
+                    <!-- <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow. -->
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <button id="btContinueHere" class="btn btn-primary text-bg-warning m-3">Continue</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                <button id="btnPayment" class="accordion-button collapsed text-bg-primary" type="button" data-bs-toggle="" data-bs-target="#panelsPayment-collapseFour" aria-expanded="false" aria-controls="panelsPayment-collapseFour">
+                    4 Payment Option
+                </button>
+                </h2>
+                <div id="panelsPayment-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                <div class="accordion-body">
+                    <form method="post" action="/shops/saveOrder/" id="formorder">
+                        {% csrf_token %}
+                        <input id="hdnCartsItems" name="hdnCartsItems" type="hidden" />
+                        <input id="hdnAddressID" name="hdnAddressID" type="hidden" />
+                        <input id="hdnTotalAmmount" name="hdnTotalAmmount" type="hidden" />
+                        <button type="submit" id="btnSaveOrderCountinuePayment"  class="btn btn-primary btn-sm text-align-right">Save Order & Continue Payment</button>
+                    </form>
+                </div>
+                </div>
+            </div>  
+        </div>
+        </div>
+        <div class="col-md-4 col-sm-4 " >
+            <div class="card pricesummary">
+                <div class="card-header text-bg-primary">
+                    <h5 class="card-title">Price Details</h5>
+                </div>
+                <div class="card-body" style="line-height: 1.8rem;" >
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">Price (<span id="checkoutItemCount">0</span> item)</div>
+                        <div class="col-md-6 col-sm-6 text-end">₹<span id="checkoutTotalValue">0</span> Rs/-</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">Discount</div>
+                        <div class="col-md-6 col-sm-6 text-end">₹<span id="checkoutDiscount">0</span> Rs/-</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">Delivery Charges</div>
+                        <div class="col-md-6 col-sm-6 text-end text-success"><span id="checkoutShippmentCharges">Free</span></div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">Total Amount</div>
+                        <div class="col-md-6 col-sm-6 text-end">₹<span id="spnTotalPrice">0</span> Rs/-</div>
+                    </div>
+                    <hr/>
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 text-success">You will save ₹<span id="checkoutSaved"></span> on this order</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+{% endblock content%}

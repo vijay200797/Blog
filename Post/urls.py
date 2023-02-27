@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (    
     vw_ViewPost,
     vw_CreatePost,
-    vw_DeletePost
+    vw_DeletePost,
     )
 
 urlpatterns = [

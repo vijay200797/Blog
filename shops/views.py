@@ -41,12 +41,16 @@ def vw_ProductCarts(request):
     return render(request, "Shops/ProductCarts.html")
 
 def vw_CheckOut(request):    
-    address= Address.objects.filter(userID= request.user) and Address.objects.filter(status= 1)
-    # print(address.query)
-    context = {
-        'address' : address
-    }
-    return render(request, "Shops/CheckOut.html", context)
+    if request.user.is_authenticated:
+            
+        address= Address.objects.filter(userID= request.user) and Address.objects.filter(status= 1)
+        # print(address.query)
+        context = {
+            'address' : address
+        }
+        return render(request, "Shops/CheckOut.html", context)
+    else:
+        return redirect("/")
 
 def vw_AddressDelete(request):
     # print(request.method)

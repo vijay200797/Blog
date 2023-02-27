@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .forms import Post_Form
 from .models import Post
 
+
+
+
 # Create Post 
 def vw_CreatePost(request):
     if request.method == 'POST':

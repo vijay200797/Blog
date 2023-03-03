@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'Post',
     'User',
     'shops',
+    'API',
     # Django App
     'django.contrib.admin',
     'django.contrib.auth',

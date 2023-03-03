@@ -1,27 +1,54 @@
-import json
 import requests
+import json
 
 
+URL = "http://localhost:8000/api/employeeClassBasedAPI/"
+HEADERS ={'content-Type': 'application/json'}
 
-URL = "http://localhost:8000/post/employeeAPI/"
-HEADER = {'content-Type': 'application/json'}
-def GetEmployee():
-    obj = requests.get(url=URL, headers=HEADER)
-    rvalue = obj.json()
+def Post():
+    data = {'FirstName' : 'Sumit',
+            'LastName' : 'Kumar ',
+            'EmailID' : 'sumit@abc.com',
+            'EmployeeCode' : 'EC0006',
+            'Active': "1"
+            }
+    data = json.dumps(data)
+    response = requests.post(url=URL, data= data, headers=HEADERS)
+    rvalue = response.json()
     print(rvalue)
 
-def PostEmployee():
+def Put():
     data = {
-        'Name': 'Ram Avtar',
-        'EmpCode': 'EC02',
-        'EmpAddress': "1"
-    }
-
-    json_data = json.dumps(data)
-    obj = requests.post(url=URL, headers=HEADER, data=json_data)
-    rvalue = obj.json()
+            'id': 13,
+            'FirstName' : 'John',
+            'LastName' : 'Dick',
+            'EmailID' : 'John@abc.com',
+            'EmployeeCode' : 'EC0007',
+            'Active': "1"
+            }
+    data = json.dumps(data)
+    response = requests.put(url=URL, data= data, headers=HEADERS)
+    rvalue = response.json()
     print(rvalue)
 
 
-# GetEmployee()
-PostEmployee()
+def Get(id=None):
+    data = {'id': id}
+    data = json.dumps(data)
+    response = requests.get(url=URL, data= data, headers=HEADERS)
+    rvalue = response.json()
+    print(rvalue['data'])
+    print(rvalue['status'])
+
+def Delete():
+    data = {'id': 8}
+    data = json.dumps(data)
+    response = requests.delete(url=URL, data= data, headers=HEADERS)
+    rvalue = response.json()
+    print(rvalue['message'])
+    print(rvalue['status'])
+
+# Post() 
+Get(13)
+Put()
+Get(13)

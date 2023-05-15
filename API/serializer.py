@@ -24,6 +24,5 @@ class EmployeeSerializer(serializers.ModelSerializer):
         print("trigger update method")
         return super().update(instance, validated_data) 
     
-
     
 

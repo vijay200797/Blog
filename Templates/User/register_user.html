@@ -1,39 +1,36 @@
 {% extends 'Base.html'%}
 
 {% block content %}
-<div class="container text-center">
-  <div class="row">
-    <div class="col">col</div>
-    <div class="col">col</div>
-    <div class="col">col</div>
-    <div class="col">col</div>
-  </div>
-</div> 
-
+<div class="container-fluid my-2">
 <div class="container" >
+<div class="row">  
 <h1>Register User </h1>
-<form method="post" action="" novalidate>
-{% csrf_token %}
-{% for frm in formReg %}
-    <div class="form-group">
-      <div class="row">
-        <div class="col-6">
-            <label>{{frm.label_tag}}</label>
-        </div>
-        <div class="col-6">
-            {{frm}} {{frm.errors|striptags}}
+<div class="row text-center">
+  {% if messages %}
+      {% for message in messages %}
+          <small {% if message.tags %} class="alert alert-{{message.tags}}" {% endif %}>{{message}}</small>
+      {% endfor %}
+  {% endif %}
+</div>
+
+  <form method="post" action="" novalidate>
+  {% csrf_token %}
+  {% for frm in formReg %}
+      <div class="form-group row p-1">
+        <label for="" class="col-sm-2 col-form-label">{{frm.label_tag}}</label>
+        <div class="col-sm-10">
+          {{frm}}
+          <small class="errmsg">
+            {{frm.errors|striptags}}
+          </small>
         </div>
       </div>
-    </div>
-{% endfor %}
-  <input type="submit" class="btn btn-success btn-sm" value="Save"/>
-  &nbsp;<a href="{% url 'login' %}">Log in</a>
-</form>
-{% if messages %}
-    {% for message in messages %}
-        <small {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</small>
-    {% endfor %}
-{% endif %}
+  {% endfor %}
+    <input type="submit" class="btn btn-success btn-sm" value="Save"/>
+    &nbsp;<a href="{% url 'login' %}">Log in</a>
+  </form>
+</div>
+</div>
 </div>
 <!-- <form>
     <div class="form-group">

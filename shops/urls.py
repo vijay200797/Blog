@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (  vw_Shop, vw_ProductDetail, vw_ProductCarts, vw_CheckOut, vw_SaveAddress, \
-      vw_SaveOrder, vw_orderSavedMessage, handleRequest, vw_AddressDelete
+      vw_SaveOrder, vw_orderSavedMessage, handleRequest, vw_AddressDelete, vw_Search
     )
 
 urlpatterns = [
@@ -13,5 +13,7 @@ urlpatterns = [
     path('deleteAddress/', vw_AddressDelete, name='deleteAddress'),
     path('saveOrder/', vw_SaveOrder, name='saveOrder'),
     path('message/', vw_orderSavedMessage, name='message'),
-    path('handleRequest/', handleRequest, name='handleRequest')
+    path('handleRequest/', handleRequest, name='handleRequest'),
+    path('search/', vw_Search, name='Search'),
+    
 ]

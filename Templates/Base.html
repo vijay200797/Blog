@@ -138,6 +138,36 @@ body{
         text-align: center;
     }
 
+    .errmsg{
+      --bs-text-opacity: 1;
+      color: rgba(255, 0, 0, 0.856)!important;
+      margin-top: 0.25rem;
+      font-size: .875em;
+    
+      
+    }
+
+html, body {
+  height: 93%;
+}
+
+#wrap {
+  min-height: 93%;
+}
+
+#main {
+  overflow:auto;
+  padding-bottom:150px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+  position: relative;
+  margin-top: -150px; /* negative value of footer height */
+  height: 150px;
+  clear:both;
+  padding-top:20px;
+}     
+
 </style>
 
 
@@ -145,12 +175,12 @@ body{
     {% endblock header%}
     {% include 'Header.html'%}
     <body>
-      <div class="row">    
+      <div id="wrap" class="row">    
         <div class="">
           <!-- <div class="col-sm-1 sidenav" style="background-color: beige;">
             
           </div> -->
-          <div class="col-sm-10 main w-100"> 
+          <div id="main" class="col-sm-10 main w-100"> 
               {% block content %}
               {% endblock content %}
             <!-- <h1>Welcome</h1>

@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-from .form import UserRegistration
+from .form import UserRegistration, UserLogin
 from django.contrib import messages
 
 
@@ -28,7 +28,7 @@ def vw_LoginUser(request):
     if not request.user.is_authenticated:
 
         if request.method == "POST":
-            frm_UserAuthentication = AuthenticationForm (request=request, data=request.POST)
+            frm_UserAuthentication = UserLogin (request=request, data=request.POST)
             if frm_UserAuthentication.is_valid():
                 uname = frm_UserAuthentication.cleaned_data['username']
                 upass = frm_UserAuthentication.cleaned_data['password']
@@ -38,7 +38,7 @@ def vw_LoginUser(request):
                     messages.success(request, "Logged in Successfully !!")
                     return redirect('/')
         else:
-            frm_UserAuthentication = AuthenticationForm()
+            frm_UserAuthentication = UserLogin()
 
         return render(request, 'User/login_user.html', {'formLogin': frm_UserAuthentication})
     else:

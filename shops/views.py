@@ -29,6 +29,41 @@ def vw_Shop(request):
     }
     return render(request, "Shops/index.html",context)
 
+def productMatch(query, item):
+    if query.lower() in item.desc.lower() or query.lower() in item.name.lower() or query.lower() in item.title.lower():
+        return True
+
+
+def vw_Search(request):
+    query= request.GET.get('product')
+    if query is None:
+        query=""
+    allProducts=[]
+    subcatsProduct = Products.objects.values('subcategory','id')
+    subcats = {item['subcategory'] for item in subcatsProduct}
+    for subcat in subcats:
+        prodItems = Products.objects.filter(subcategory=subcat)
+        prod = [item for item in prodItems if  productMatch(query, item)]
+        totalProduct = len(prod)
+        nSlides = totalProduct // 4 + ceil((totalProduct/4) -(totalProduct//4))
+        if totalProduct!=0:
+            allProducts.append([prod, range(0,nSlides), nSlides])
+    
+    context={
+        'allProducts':allProducts
+    }
+
+    print(len(allProducts))
+    if len(allProducts)<=0:
+        context={
+        'Status':'Failed',
+        'Message':'No found Search.. please change search cretria '
+        }
+
+    print(context)
+    return render(request,"Shops/Search.html", context)
+
+
 def vw_ProductDetail(request, myid):
     productDetail = Products.objects.filter(id=myid)
     # print(productDetail)
@@ -183,14 +218,14 @@ def handleRequest(request):
         response_dict[i] = form[i]
         if i == 'CHECKSUMHASH':
             checksum = form[i]
-    verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
-    if verify:
-        if response_dict['RESPCODE'] == '01':
-            url ="/shops/message/?messageid={0}&orderid={1}".format(1, response_dict.get("ORDERID"))
-            print('order successful')
-        else:
-            print('order was not successful because' + response_dict['RESPMSG'])
+            verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
+            if verify:
+                if response_dict['RESPCODE'] == '01':
+                    url ="/shops/message/?messageid={0}&orderid={1}".format(1, response_dict.get("ORDERID"))
+                    print('order successful')
+                else:
+                    print('order was not successful because' + response_dict['RESPMSG'])
 
-        # Write Code To Save Payment Details
+                # Write Code To Save Payment Details
 
     return redirect(url)

@@ -32,7 +32,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             {% for product in products %}
-                                {% include 'shops/snippets/ProductCard.html' with product=product %}
+                                {% include '../shops/snippets/ProductCard.html' with product=product %}
                             
                                 {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
                                     </div><div class="carousel-item">

@@ -66,14 +66,11 @@
               <li><a class="dropdown-item" href="/post/">View</a></li>
               <li><a class="dropdown-item" href="/post/create">Post</a></li>
             {% endif %}
-            <!-- <li><a href="#">About</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li> -->
             {% if not request.user.is_authenticated %}
-            <li><a class="dropdown-item" href="/user/create">Create User</a></li>
+            <li><a class="dropdown-item" href="/user/create/">Create User</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/user/login">Login User</a></li>
-            <li><a class="dropdown-item" href="/user/forget">Forget User</a></li>
+            <li><a class="dropdown-item" href="/user/login/">Login User</a></li>
+            <li><a class="dropdown-item" href="/user/forget/">Forget User</a></li>
             {% endif  %}
         </ul>
         
@@ -90,50 +87,6 @@
       
     </div>
   </nav>
-
-
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar scroll</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              User
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" href="/user/">View User</a></li>
-              <li><a class="dropdown-item" href="/user/create">Create User</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/user/login">Login User</a></li>
-              <li><a class="dropdown-item" href="/user/forget">Forget User</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Blog
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" href="/post/">View</a></li>
-              <li><a class="dropdown-item" href="/post/create">Post</a></li>
-             
-            </ul>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav> -->
-
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Logo</a>
@@ -146,42 +99,19 @@
               <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
               <li class="nav-item"><a class="nav-link" href="/user/">View User</a></li>
               <li class="nav-item"><a class="nav-link" href="/post/">View</a></li>
-              <li class="nav-item"><a class="nav-link" href="/post/create">Post</a></li>
+              <li class="nav-item"><a class="nav-link" href="/post/create/">Post</a></li>
               <li class="nav-item"><a class="nav-link" href="/shops/">Shops</a></li>
             {% endif %}
-            <!-- <li><a href="#">About</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li> -->
             {% if not request.user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="/user/create">Create User</a></li>
-            <li class="nav-item"><a class="nav-link" href="/user/login">Login User</a></li>
-            <li class="nav-item"><a class="nav-link" href="/user/forget">Forget User</a></li>
+            <li class="nav-item"><a class="nav-link" href="/user/create/">Create User</a></li>
+            <li class="nav-item"><a class="nav-link" href="/user/login/">Login User</a></li>
+            <li class="nav-item"><a class="nav-link" href="/user/forget/">Forget User</a></li>
             <li class="nav-item"><a class="nav-link" href="/shops/">Shops</a></li>
             {% endif  %}
             <li class="nav-item"><a class="nav-link" href="#"> </a></li>
-          <!-- <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li> -->
+          
         </ul>
         <form class="d-flex" role="search" action="{% url 'Search'%}"  method="get">
-          <!-- {% csrf_token %} -->
           <input class="form-control me-2" type="search" id="product" name="product" value="" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>

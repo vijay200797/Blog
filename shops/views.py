@@ -10,7 +10,7 @@ import json
 
 MERCHANT_KEY ="bKMfNxPPf_QdZppa"
 MERCHANT_ID = "DIY12386817555501617"
-PAYMENT_CALLBACK_URL = "http://localhost:8000/shops/handleRequest/"
+PAYMENT_CALLBACK_URL =  "/shops/handleRequest/"
 
 # Create your views here.
 def vw_Shop(request):
@@ -183,7 +183,7 @@ def vw_SaveOrder(request):
                 'INDUSTRY_TYPE_ID': 'Retail',
                 'WEBSITE': 'WEBSTAGING',
                 'CHANNEL_ID' :'WEB',
-                'CALLBACK_URL': PAYMENT_CALLBACK_URL 
+                'CALLBACK_URL': request.build_absolute_uri('/')[:-1]+PAYMENT_CALLBACK_URL 
 
             }
             param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)

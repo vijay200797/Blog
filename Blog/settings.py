@@ -21,13 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit'
+SECRET_KEY =  'w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit' # os.environ.get("SECRET_KEY") # 'w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # bool(os.environ.get("DEBUG", 0))  #True
 
 ALLOWED_HOSTS = ['demoblogapp.azurewebsites.net','127.0.0.1','localhost', '*']    #demoblogapp.azurewebsites.net
-
+# ALLOWED_HOSTS.extend(
+#     filter(None, os.environ.get("ALLOWED_HOSTS",'').split(","))
+# )
 
 # Application definition
 
@@ -84,10 +86,19 @@ WSGI_APPLICATION = 'Blog.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+
+    # 'default': {
+    #         'ENGINE': 'django.db.backends.postgresql',
+    #         'HOST': os.environ.get('DB_HOST'),
+    #         'NAME': os.environ.get('DB_NAME'),
+    #         'USER': os.environ.get('DB_USER'),
+    #         'PASSWORD': os.environ.get('DB_PASS'),
+    #     }
     'default': {
          'ENGINE': 'django.db.backends.sqlite3',
          'NAME': BASE_DIR / 'db.sqlite3',
      }
+
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
     #     'NAME': 'blogsite',

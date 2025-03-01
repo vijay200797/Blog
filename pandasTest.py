@@ -40,5 +40,10 @@ df = df.sort_values(by ='Name', ascending=True)
 # Short Row By Multiple Column
 df = df.sort_values(by =['Name', 'Email'], ascending=[True, False])
 
-# df =df.groupby(by=['Dept_id','Name'])['Name', 'Email'].Name.count()
+# Group By
+df =df.groupby(by=['Dept_id','Name'])['Name', 'Email'].Name.count()
+
+# Pivot Table
+df = df.pivot(columns=["Name"], values=["Grade"], index=["DeptID"]) 
 print(df)
+

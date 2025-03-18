@@ -163,16 +163,32 @@
 # di = { str(item[0]).lower():item[1] for item in data }
 # print(di)
 
-import asyncio
+# import asyncio
 
-async def coro(n):
-    print(f"Waiting Time {n}")
-    await asyncio.sleep(n)
-    return n
-async def main():
-    tasks = [asyncio.create_task(coro(i)) for i in range(5)]
-    results = await asyncio.gather(*tasks)
-    print(results)
+# async def coro(n):
+#     print(f"Waiting Time {n}")
+#     await asyncio.sleep(n)
+#     return n
+# async def main():
+#     tasks = [asyncio.create_task(coro(i)) for i in range(5)]
+#     results = await asyncio.gather(*tasks)
+#     print(results)
 
-asyncio.run(main())
-print("Done")
+# asyncio.run(main())
+# print("Done")
+
+
+# li = ["A",'2',['3','4','5','6']]
+li = [[1,2],[3,4,5,6]]
+from itertools import chain
+li2 =  chain.from_iterable(li)
+print(li2)
+print(list(li2))
+
+
+li = [1,2,[3,4,5,6]]
+from itertools import chain
+li =  chain.from_iterable(li)
+
+
+

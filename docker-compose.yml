@@ -14,13 +14,13 @@ services:
     volumes:
       - .:/app
     environment:
-      - SECRET_KEY="w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit"
-      - DEBUG = "1"
-      - ALLOWED_HOSTS = "127.0.0.1"
-      - DB_HOST="db"
-      - DB_NAME="devdb"
-      - DB_USER="devuser"
-      - DB_PASS="changeme"
+      - SECRET_KEY=w6$5!mb3veysj6u^l_bl$1zzug4f49^su8l5*j)v^*hu!5$sit
+      - DEBUG = 1
+      - ALLOWED_HOSTS = 127.0.0.1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
 
     depends_on:
       - db

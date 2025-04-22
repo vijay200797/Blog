@@ -3,6 +3,7 @@ FROM python:3.9.0
 #FROM python:3.9-alpine3.13
 
 LABEL maintainer="BuildApp"
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED=1
 
 COPY ./requirements.txt /requirements.txt
@@ -26,9 +27,14 @@ RUN ls -ltr
 # RUN PWD
 # CMD [ "python manage.py runserver" ]
 
-ENTRYPOINT ["python", "manage.py"]
-CMD ["runserver", "0.0.0.0:8000"]
+# ENTRYPOINT ["python", "manage.py"]
+# CMD ["runserver", "0.0.0.0:8000"]
+COPY ./entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r$//g' entrypoint.sh
+RUN chmod +x entrypoint.sh
 
+# run entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 
 # # set work directory
 # WORKDIR /usr/src/app
